@@ -1,0 +1,38 @@
+const eraseOverlapIntervals = (intervals) => {
+  //check edge case
+  if (intervals.length === 0) return 0;
+
+  //count overlap intervals
+  let intervalCount = 0;
+
+  //sort so we can over the array once
+  intervals.sort((a, b) => a[0] - b[0]);
+
+  //higher end
+  let higherEnd = intervals[0][1];
+
+  //loop over sorted intervals
+  //check if overlap, is so add to count
+  for (let i = 1; i < intervals.length; i++) {
+    const currInterval = intervals[i];
+
+    //check for intersection
+    if (currInterval[0] < higherEnd) {
+      intervalCount++;
+      higherEnd = Math.min(currInterval[1], higherEnd);
+    } else {
+      higherEnd = currInterval[1];
+    }
+  }
+
+  return intervalCount;
+};
+
+const intervals = [
+  [1, 100],
+  [11, 22],
+  [1, 11],
+  [2, 12],
+];
+
+console.log(eraseOverlapIntervals(intervals));
