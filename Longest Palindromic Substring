@@ -1,0 +1,34 @@
+const longestPalindrome = (s) => {
+    //we need to return at least one char
+    let startIdx = 0;
+    let maxPalLength = 1;
+    
+    //loop over s
+    for(let i = 0; i < s.length; i++){
+        //call helper func
+        helper( i - 1, i + 1);
+        //for spaces in between
+        helper(i, i + 1);
+    }
+    
+    //move around the center
+    //we go left and right away from center
+    function helper(leftPointer, rightPointer){
+        //set barriers so we don't go beyond  
+        //check if left and right are equal
+        while(leftPointer >= 0 && rightPointer < s.length && s[leftPointer] === s[rightPointer]){
+            const currPalLength = rightPointer - leftPointer + 1;
+            if(currPalLength > maxPalLength){
+                maxPalLength = currPalLength;
+                startIdx = leftPointer;
+            }
+            leftPointer--;
+            rightPointer++;
+        }
+    }
+    
+    return s.slice(startIdx, startIdx + maxPalLength);
+};
+
+const  s = "babad";
+console.log(longestPalindrome(s))
